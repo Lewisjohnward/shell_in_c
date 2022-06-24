@@ -4,7 +4,7 @@
 #include <unistd.h>
 #include <stdlib.h>
 
-int spawn_child(char *command)
+void spawn_child(char *command)
 {
     pid_t pid;
     int exec;
@@ -33,7 +33,7 @@ int spawn_child(char *command)
         //printf("I am the parent\n");
     }
 }
-int get_command(char *command, int *res)
+void get_command(char *command, int *res)
 {
     *res = scanf("%s", command);
 }
