@@ -18,7 +18,7 @@ void spawn_child(char *command)
         exec = execv(args[0], args);
         if (exec == -1)
         {
-            printf("Unable to launch %s\n", command);
+            printf("%s not found\n", command);
             exit(0);
         }
     }
