@@ -1,8 +1,12 @@
 #include <stdio.h>
+#include <string.h>
 #include <sys/wait.h>
 #include <sys/types.h>
 #include <unistd.h>
 #include <stdlib.h>
+
+
+#define CLEAR_TERMINAL() printf("\033c")
 
 void spawn_child(char *command)
 {
@@ -38,8 +42,31 @@ void get_command(char *command, int *res)
     *res = scanf("%s", command);
 }
 
-int main (void)
+int main (int argc, char **argv, char **envp)
 {
+    CLEAR_TERMINAL();
+
+    for(char **env = envp; *env != 0; env++)
+    {
+        char *thisEnv = *env;
+        char newStr[5];
+        int i;
+        for(i = 0; i < 4; i++)
+            newStr[i] = thisEnv[i];
+        newStr[i] = '\0';
+
+        if (!strcmp(newStr, "PATH"))
+        {
+            printf("new str: %s\n", thisEnv);
+            char *tok = strtok(thisEnv, ":");
+            while(tok != NULL)
+            {
+                printf("%s\n", tok);
+                tok = strtok(NULL, ":");
+            }
+        }
+    }
+
     char command[256];
     int res;
     while(1)
